@@ -1,0 +1,15 @@
+{
+  "name": "multiserver-bluetooth",
+  "version": "1.0.0",
+  "description": "A scuttlebutt multiserver plugin to support bluetooth serial connections.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://www.github.com/happy0/multiserver-bluetooth"
+  },
+  "author": "Gordon Martin",
+  "license": "MIT"
+}
