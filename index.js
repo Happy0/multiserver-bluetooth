@@ -51,4 +51,4 @@ function makePlugin(opts) {
 
 }
 
-module.export = makePlugin;
+module.exports = makePlugin;
