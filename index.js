@@ -10,14 +10,11 @@ function makePlugin(opts) {
   }
 
   function parse (addr) {
-    console.log("multiserv-blueooth: parsing address: " + addr);
-
     if (!addr.startsWith("bt:")) return null;
     return addr.replace("bt:", "");
   }
 
   function client (address, cb) {
-    console.log("multiserv-blueooth: client connection " + address)
 
     bluetoothManager.connect(address, cb);
 
@@ -28,7 +25,6 @@ function makePlugin(opts) {
   }
 
   function server (onConnection) {
-    console.log("multiserv-bluetooth: starting server");
 
     // The bluetooth manager calls back with a duplex stream on a new connection
     // which we can then call back onConnection with
