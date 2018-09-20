@@ -37,12 +37,18 @@ function makePlugin(opts) {
     }
   }
 
+  function stringify () {
+    if(opts && !opts.macAddress) return
+    return ['bluetooth', opts.macAddress].join(':')
+  }
+
   return {
     name: name,
     scope: scope,
     parse: parse,
     client: client,
-    server: server
+    server: server,
+    stringify: stringify
   }
 
 }
