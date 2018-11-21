@@ -6,7 +6,7 @@ function makePlugin(opts) {
   const name = "bluetooth"
 
   function scope() {
-    return opts.scope || 'private';
+    return opts.scope || 'public';
   }
 
   function parse (addr) {
@@ -14,9 +14,29 @@ function makePlugin(opts) {
     return addr.replace("bt:", "");
   }
 
-  function client (address, cb) {
+  /**
+   * The multiserver address format does not allow : symbols to be used, so we omit them internally.
+   * This function adds them back in.
+   * 
+   * @param {} btInternalRepresentation the internal representation (e.g. 65D900DDB353)
+   * @returns the bluetooth mac address implementation (e.g. 65:D9:00:DD:B3:53)
+   */
+  function toMacAddress(btInternalRepresentation) {
+    const parts = []
 
-    bluetoothManager.connect(address, cb);
+    do { 
+      parts.push(btInternalRepresentation.substring(0, 2)) 
+    } 
+    while( (btInternalRepresentation = btInternalRepresentation.substring(2, btInternalRepresentation.length)) != "" );
+
+    console.log("fsdfds: " + parts.join(":"));
+    return parts.join(":");
+  }
+
+  function client (address, cb) {
+    const macAddress = toMacAddress(address);
+
+    bluetoothManager.connect(macAddress, cb);
 
     return function() {
       bluetoothManager.disconnect(address);
@@ -37,9 +57,10 @@ function makePlugin(opts) {
     }
   }
 
-  function stringify () {
-    if(opts && !opts.macAddress) return
-    return ['bluetooth', opts.macAddress].join(':')
+  function stringify (scope) {
+    if (scope !== scope()) return;
+    if(opts && !opts.macAddress) return;
+    return ['bt', opts.macAddress].join(':')
   }
 
   return {
