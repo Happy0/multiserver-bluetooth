@@ -29,7 +29,6 @@ function makePlugin(opts) {
     } 
     while( (btInternalRepresentation = btInternalRepresentation.substring(2, btInternalRepresentation.length)) != "" );
 
-    console.log("fsdfds: " + parts.join(":"));
     return parts.join(":");
   }
 
