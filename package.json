@@ -1,6 +1,6 @@
 {
   "name": "multiserver-bluetooth",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A scuttlebutt multiserver plugin to support bluetooth serial connections.",
   "main": "index.js",
   "scripts": {

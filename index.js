@@ -18,11 +18,14 @@ function makePlugin(opts) {
    * The multiserver address format does not allow : symbols to be used, so we omit them internally.
    * This function adds them back in.
    * 
-   * @param {} btInternalRepresentation the internal representation (e.g. 65D900DDB353)
+   * @param {} internalRepresentation the internal representation (e.g. 65D900DDB353)
    * @returns the bluetooth mac address implementation (e.g. 65:D9:00:DD:B3:53)
    */
-  function toMacAddress(btInternalRepresentation) {
-    const parts = []
+  function toMacAddress(internalRepresentation) {
+    const parts = [];
+
+    // Take a copy of the string
+    const btInternalRepresentation = internalRepresentation.slice();
 
     do { 
       parts.push(btInternalRepresentation.substring(0, 2)) 
