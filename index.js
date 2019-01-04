@@ -25,7 +25,7 @@ function makePlugin(opts) {
     const parts = [];
 
     // Take a copy of the string
-    const btInternalRepresentation = internalRepresentation.slice();
+    let btInternalRepresentation = internalRepresentation.slice();
 
     do { 
       parts.push(btInternalRepresentation.substring(0, 2)) 
@@ -59,8 +59,8 @@ function makePlugin(opts) {
     }
   }
 
-  function stringify (scope) {
-    if (scope !== scope()) return;
+  function stringify (s) {
+    if (s !== scope()) return;
     if(opts && !opts.macAddress) return;
     return ['bt', opts.macAddress].join(':')
   }
