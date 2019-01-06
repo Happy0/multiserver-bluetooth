@@ -3,6 +3,8 @@ function makePlugin(opts) {
 
   let bluetoothManager = opts.bluetoothManager;
 
+  let ownMacAddress = null;
+
   const name = "bluetooth"
 
   function scope() {
@@ -46,13 +48,25 @@ function makePlugin(opts) {
 
   }
 
-  function server (onConnection) {
+  function server (onConnection, startedCb) {
 
-    // The bluetooth manager calls back with a duplex stream on a new connection
-    // which we can then call back onConnection with
-    bluetoothManager.listenForIncomingConnections(
-      (err, connection) => onConnection(connection)
-    )
+    bluetoothManager.getOwnMacAddress((err, address) => {
+      console.log("multiserver-bluetooth: Own address is " + address);
+      
+      ownMacAddress = address;
+
+      // The bluetooth manager calls back with a duplex stream on a new connection
+      // which we can then call back onConnection with
+      bluetoothManager.listenForIncomingConnections(
+        (err, connection) => onConnection(connection)
+      )
+
+      if (startedCb) {
+        // Call back to let multiserver know that we're ready to accept incoming connections
+        startedCb(err, macAddress);
+      }
+
+    })
 
     return function() {
       bluetoothManager.stopServer();
@@ -61,8 +75,7 @@ function makePlugin(opts) {
 
   function stringify (s) {
     if (s !== scope()) return;
-    if(opts && !opts.macAddress) return;
-    return ['bt', opts.macAddress].join(':')
+    return ['bt', ownMacAddress].join(':')
   }
 
   return {
