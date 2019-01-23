@@ -51,7 +51,6 @@ function makePlugin(opts) {
   function server (onConnection, startedCb) {
 
     bluetoothManager.getOwnMacAddress((err, address) => {
-      console.log("multiserver-bluetooth: Own address is " + address);
       
       ownMacAddress = address;
 
