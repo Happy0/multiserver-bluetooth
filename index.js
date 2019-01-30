@@ -37,6 +37,10 @@ function makePlugin(opts) {
     return parts.join(":");
   }
 
+  function toInternalAddress(macAddress) {
+    return macAddress.split(":").join("");
+  }
+
   function client (address, cb) {
     const macAddress = toMacAddress(address);
 
@@ -74,7 +78,7 @@ function makePlugin(opts) {
 
   function stringify (s) {
     if (s !== scope()) return;
-    return ['bt', ownMacAddress].join(':')
+    return ['bt', toInternalAddress(ownMacAddress)].join(':')
   }
 
   return {
