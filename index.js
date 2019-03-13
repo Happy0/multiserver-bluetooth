@@ -66,7 +66,7 @@ function makePlugin(opts) {
 
       if (startedCb) {
         // Call back to let multiserver know that we're ready to accept incoming connections
-        startedCb(err, macAddress);
+        startedCb(err, address);
       }
 
     })
